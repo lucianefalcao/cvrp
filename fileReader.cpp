@@ -56,6 +56,40 @@ void readDemands()
     }
 }
 
+void readMatrix()
+{
+    int matrix[dimension][dimension];
+
+    std::string str;
+
+    for (int i = 0; i < 16; ++i)
+    {
+
+        getline(f, str);
+        std::stringstream ss(str);
+
+        int vertice;
+
+        for (int j = i+1; i < 16; )
+        {
+            
+            matrix[i][j-1] = 0;
+
+            while (ss >> vertice)
+            {
+                matrix[i][j] = vertice;
+                matrix[j][i] = vertice;
+            }
+            
+            
+        }
+        
+    }
+    
+
+    
+}
+
 // Abre o arquivo e lê os dados
 void readFile(std::string fileName)
 {
@@ -68,5 +102,6 @@ void readFile(std::string fileName)
         skipLine(1);
         readDemands();
         skipLine(2);
+        readMatrix();
     }
 }
