@@ -1,4 +1,4 @@
-#include "includes/fileReader.h"
+#include "../includes/fileReader.h"
 
 int main(int argc, char** argv)
 {

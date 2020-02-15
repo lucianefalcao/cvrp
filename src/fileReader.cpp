@@ -1,9 +1,9 @@
-#include "includes/fileReader.h"
+#include "../includes/fileReader.h"
 
 int dimension;
 int capacity;
 std::fstream f;
-std::vector<Demands> demands;
+std::vector<Client> clients;
 
 /* 
    Ler a dimensão e capacidade do veículo.
@@ -40,10 +40,11 @@ void skipLine(int lines)
 }
 
 /* 
-   Ler as demandas e adiciona a um vetor de 
-   Demandas, criando uma nova instância 
-*/
-void readDemands()
+    Ler o id e a demanda do client e cria uma
+    nova instância de cliente e adiciona em um
+    vector
+ */
+void setClients()
 {
     int clientID, clientDemand;
 
@@ -52,7 +53,8 @@ void readDemands()
         f >> clientID;
         std::cout << clientID;
         f >> clientDemand;
-        demands.push_back(Demands(clientID, clientDemand));
+        Client client = Client(clientID, clientDemand);
+        clients.push_back(client);
     }
 }
 
@@ -65,8 +67,9 @@ void readFile(std::string fileName)
     {
         skipLine(1);
         readDimensionAndCapacity();
+        Vehicle vehicle = Vehicle(capacity);
         skipLine(1);
-        readDemands();
+        setClients();
         skipLine(2);
     }
 }

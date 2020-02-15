@@ -1,7 +1,8 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
-#include "demands.h"
+#include "client.h"
+#include "vehicle.h"
 
 #include <fstream>
 #include <iostream>
@@ -12,6 +13,6 @@
 void readFile(std::string);
 void readDimensionAndCapacity();
 void skipLine(int lines);
-void readDemands();
+void setClients();
 
 #endif
