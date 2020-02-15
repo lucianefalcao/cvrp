@@ -1,11 +1,42 @@
 #include "../includes/vehicle.h"
 
-Vehicle::Vehicle(int capacity)
+Vehicle::Vehicle()
 {
-    this->capacity = capacity;
+    setCurrentLocation(0); // começa no depósito
+    setCarga(0); // começa sem carga
 }
 
 int Vehicle::getCapacity()
 {
     return capacity;
+}
+
+void Vehicle::setCapacity(int capacity)
+{
+    this->capacity = capacity;
+}
+
+int Vehicle::getCurrentLocation()
+{
+    return this->currentLocation;
+}
+
+void Vehicle::setCurrentLocation(int loc)
+{
+    this->currentLocation = loc;
+}
+
+void Vehicle::addClientToRoute(Client client)
+{
+    this->route.push_back(client);
+}
+
+void Vehicle::setCarga(int carga)
+{
+    this->carga = carga;
+}
+
+bool Vehicle::fits(int demand)
+{
+    return (carga + demand) <= capacity;
 }

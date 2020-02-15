@@ -4,6 +4,8 @@ int dimension;
 int capacity;
 std::fstream f;
 Model *model = new Model();
+Graph *graph = new Graph();
+Vehicle *vehicle = new Vehicle();
 
 /* 
    Ler a dimensão e capacidade do veículo.
@@ -28,7 +30,7 @@ void readDimensionAndCapacity()
         else if(i == 1)
         {
             capacity = std::stoi(token);
-            Vehicle *vehicle = new Vehicle(capacity);
+            vehicle->setCapacity(capacity);
         }
     }
 }
@@ -65,8 +67,9 @@ void setClients()
 
 void readMatrix()
 {
+    graph->setNumberOfClients(dimension);
+    graph->initializeMatrix();
 
-    Graph *graph = new Graph(dimension);
     std::string s;
     int distance;
 
@@ -78,7 +81,7 @@ void readMatrix()
         {
             while (ss >> distance)
             {
-                graph->addEdges(i, j, distance);
+                graph->addEdges(i, distance);
             }
         }
         
@@ -98,5 +101,7 @@ void readFile(std::string fileName)
         setClients();
         skipLine(3);
         readMatrix();
+        Heuristic *h = new Heuristic(model, graph, vehicle);
+        h->nearestNeighboor();
     }
 }

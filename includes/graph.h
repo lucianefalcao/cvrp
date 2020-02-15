@@ -10,9 +10,14 @@ private:
     std::vector<std::vector<int>> marix_adj;
     int numberOfVertices;
 public:
-    Graph(int numberOfVertices);
+    Graph();
     ~Graph();
-    void addEdges(int, int, int);
+
+    void addEdges(int, int);
+    void setNumberOfClients(int numberOfClients);
+    void initializeMatrix();
+    std::vector<std::vector<int>> getMatrix();
+
 };
 
 

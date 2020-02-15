@@ -3,6 +3,7 @@
 
 #include <vector>
 
+// TODO: mudar o vetor de client para ser uma referência.
 
 #include "client.h"
 
@@ -15,6 +16,8 @@ public:
     Model();
     void addClients(Client *client);
     void setDimension(int dimension);
+    int getDimension();
+    std::vector<Client> getClients();
 };
 
 

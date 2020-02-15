@@ -2,9 +2,7 @@
 #define FILEREADER_H
 
 #include "client.h"
-#include "vehicle.h"
-#include "model.h"
-#include "graph.h"
+#include "heuristic.h"
 
 #include <fstream>
 #include <iostream>

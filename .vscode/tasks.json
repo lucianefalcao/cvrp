@@ -20,6 +20,7 @@
                 "${workspaceFolder}/src/model.cpp",
                 "${workspaceFolder}/src/client.cpp",
                 "${workspaceFolder}/src/graph.cpp",
+                "${workspaceFolder}/src/heuristic.cpp",
                 "-o",
                 "${workspaceFolder}/main",
             ],
