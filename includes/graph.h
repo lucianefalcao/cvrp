@@ -1,17 +1,19 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+#include <iostream>
 #include <vector>
 
 class Graph
 {
 private:
+    std::vector<std::vector<int>> marix_adj;
     int numberOfVertices;
-    std::vector<std::vector<int>> *matrix;
 public:
-    Graph(int);
+    Graph(int numberOfVertices);
     ~Graph();
+    void addEdges(int, int, int);
 };
 
 
-#endif 
+#endif

@@ -3,7 +3,7 @@
 int dimension;
 int capacity;
 std::fstream f;
-std::vector<Client> clients;
+Model *model = new Model();
 
 /* 
    Ler a dimensão e capacidade do veículo.
@@ -12,7 +12,6 @@ std::vector<Client> clients;
 */
 void readDimensionAndCapacity()
 {
-
     std::string str;
 
     for (int i = 0; i < 2; ++i)
@@ -22,9 +21,15 @@ void readDimensionAndCapacity()
         token = strtok(NULL, " "); // token = valor
 
         if(i == 0)
+        {
             dimension = std::stoi(token);
+            model->setDimension(dimension);
+        }
         else if(i == 1)
+        {
             capacity = std::stoi(token);
+            Vehicle *vehicle = new Vehicle(capacity);
+        }
     }
 }
 
@@ -54,7 +59,29 @@ void setClients()
         std::cout << clientID;
         f >> clientDemand;
         Client client = Client(clientID, clientDemand);
-        clients.push_back(client);
+        model->addClients(&client);
+    }
+}
+
+void readMatrix()
+{
+
+    Graph *graph = new Graph(dimension);
+    std::string s;
+    int distance;
+
+    for(int i = 0; i < dimension; ++i)
+    {
+        getline(f, s);
+        std::stringstream ss(s);
+        for (int j = 0; j < dimension; ++j)
+        {
+            while (ss >> distance)
+            {
+                graph->addEdges(i, j, distance);
+            }
+        }
+        
     }
 }
 
@@ -67,9 +94,9 @@ void readFile(std::string fileName)
     {
         skipLine(1);
         readDimensionAndCapacity();
-        Vehicle vehicle = Vehicle(capacity);
         skipLine(1);
         setClients();
-        skipLine(2);
+        skipLine(3);
+        readMatrix();
     }
 }
