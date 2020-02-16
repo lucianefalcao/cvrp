@@ -9,7 +9,7 @@ void Model::setDimension(int dimension)
 
 void Model::addClients(Client *client)
 {
-    this->clients.push_back(*client);
+    this->clients.push_back(client);
 }
 
 int Model::getDimension()
@@ -17,7 +17,7 @@ int Model::getDimension()
     return this->dimension;
 }
 
-std::vector<Client> Model::getClients()
+std::vector<Client*> Model::getClients()
 {
     return this->clients;
 }

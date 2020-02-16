@@ -3,7 +3,7 @@
 Vehicle::Vehicle()
 {
     setCurrentLocation(0); // começa no depósito
-    setCarga(0); // começa sem carga
+    this->carga = 0; // começa sem carga
 }
 
 int Vehicle::getCapacity()
@@ -33,10 +33,15 @@ void Vehicle::addClientToRoute(Client client)
 
 void Vehicle::setCarga(int carga)
 {
-    this->carga = carga;
+    this->carga += carga;
 }
 
 bool Vehicle::fits(int demand)
 {
+    /* 
+    se o caminho ainda tiver capacidade 
+    atualiza a carga
+    */
+   
     return (carga + demand) <= capacity;
 }

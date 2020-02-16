@@ -6,6 +6,7 @@ std::fstream f;
 Model *model = new Model();
 Graph *graph = new Graph();
 Vehicle *vehicle = new Vehicle();
+Client *client = NULL;
 
 /* 
    Ler a dimensão e capacidade do veículo.
@@ -60,8 +61,8 @@ void setClients()
         f >> clientID;
         std::cout << clientID;
         f >> clientDemand;
-        Client client = Client(clientID, clientDemand);
-        model->addClients(&client);
+        client = new Client(clientID, clientDemand);
+        model->addClients(client);
     }
 }
 
