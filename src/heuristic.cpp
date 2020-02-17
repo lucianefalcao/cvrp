@@ -13,9 +13,12 @@ void Heuristic::nearestNeighboor()
 {
     int i = 0;
     int client = 0;
-    int visitedCients = 0;
+    int visitedClients = 0;
 
-    while (visitedCients < model->getDimension())
+    // Adiciona o depósito como o início da rota
+    vehicle->addClientToRoute((*model->getClients()[0]));
+
+    while (visitedClients < model->getDimension())
     {
         i = client;
         int shortestDistance = std::numeric_limits<int>::max();
@@ -35,6 +38,9 @@ void Heuristic::nearestNeighboor()
             }
         }
 
+        if(client == i)
+            break;
+
         if ((*model->getClients()[client]).inRoute() == false)
         {
             vehicle->setCarga((*model->getClients()[client]).getDemand());
@@ -42,8 +48,11 @@ void Heuristic::nearestNeighboor()
             vehicle->addClientToRoute((*model->getClients()[client]));
         }
 
-        ++visitedCients;
+        ++visitedClients;
         
     }
+
+    // Adiciona o depósito ao final da rota
+    vehicle->addClientToRoute((*model->getClients()[0]));
     
 }

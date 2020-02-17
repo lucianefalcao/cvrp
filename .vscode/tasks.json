@@ -22,7 +22,7 @@
                 "${workspaceFolder}/src/graph.cpp",
                 "${workspaceFolder}/src/heuristic.cpp",
                 "-o",
-                "${workspaceFolder}/main",
+                "${workspaceFolder}/cvrp",
             ],
             "options": {
                 "cwd": "/usr/bin"
