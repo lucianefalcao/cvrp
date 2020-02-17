@@ -45,3 +45,13 @@ bool Vehicle::fits(int demand)
    
     return (carga + demand) <= capacity;
 }
+
+void Vehicle::printRoute()
+{
+    std::cout << '\n';
+    for (int i = 0; i < route.size(); ++i)
+    {
+        std::cout << route[i].getID() << " -> ";
+    }
+    
+}
