@@ -2,8 +2,11 @@
 #define VEHICLE_H
 
 #include <vector>
+#include <iostream>
 
 #include "client.h"
+
+// Talvez tornar route um vetor de referências
 
 class Vehicle
 {
@@ -21,6 +24,7 @@ public:
     void setCapacity(int capacity);
     void addClientToRoute(Client client);
     void setCarga(int carga);
+    void printRoute();
 
     int getCapacity();
     int getCurrentLocation();

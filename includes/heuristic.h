@@ -16,7 +16,10 @@ private:
 public:
     Heuristic(Model *model, Graph *graph, Vehicle *vehicle);
     ~Heuristic();
+
     void nearestNeighboor();
+
+    bool everyoneVisited();
 };
 
 

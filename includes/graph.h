@@ -7,11 +7,10 @@
 class Graph
 {
 private:
-    std::vector<std::vector<int>> marix_adj;
+    std::vector<std::vector<int>> marix_adj; 
     int numberOfVertices;
 public:
     Graph();
-    ~Graph();
 
     void addEdges(int, int);
     void setNumberOfClients(int numberOfClients);
