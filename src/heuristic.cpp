@@ -2,23 +2,31 @@
 
 // TODO: adicionar comentários
 
-Heuristic::Heuristic(Model *model, Graph *graph, Vehicle *vehicle)
+Heuristic::Heuristic(){}
+
+void Heuristic::setModel(Model *model)
 {
     this->model = model;
-    this->graph = graph;
-    this->vehicle = vehicle;
 }
 
-bool Heuristic::everyoneVisited()
+void Heuristic::setGraph(Graph *graph)
 {
-    for (int i = 1; i < model->getClients().size(); ++i)
-    {
-        if(!(*model->getClients()[i]).inRoute())
-            return true;
-    }
+    this->graph = graph;
+}
 
-    return false;
-    
+void Heuristic::createVehicle(int capacity)
+{
+    this->vehicle = new Vehicle();
+    vehicle->setCapacity(capacity);
+    vehicle->setCarga();
+    // Adiciona o depósito como o início da rota
+    vehicle->addClientToRoute((*model->getClients()[0]));
+    addVehicle(vehicle);
+}
+
+void Heuristic::addVehicle(Vehicle *v)
+{
+    vehicles.push_back(v);
 }
 
 void Heuristic::nearestNeighboor()
@@ -26,17 +34,14 @@ void Heuristic::nearestNeighboor()
     int i, client;
     int visitedClients = 0;
     int cost = 0;
+    // O problema tem pelo menos um caminho
+    int numberOfVehicles = 1;
 
-    // Adiciona o depósito como o início da rota
-    vehicle->addClientToRoute((*model->getClients()[0]));
-
-    // Mudar este laço
-    while (everyoneVisited())
+    while (numberOfVehicles)
     {
         client = 0;
-        vehicle->setCarga(0);
 
-        while (visitedClients < model->getDimension())
+        while (visitedClients < model->getDimension()-1)
         {
             i = client;
             int shortestDistance = std::numeric_limits<int>::max();
@@ -47,7 +52,7 @@ void Heuristic::nearestNeighboor()
                 {
                     if((*model->getClients()[j]).inRoute() == false)
                     {
-                        if (vehicle->fits((*model->getClients()[j]).getDemand()))
+                        if (vehicles[numberOfVehicles-1]->fits((*model->getClients()[j]).getDemand()))
                         {
                             client = j;
                             shortestDistance = graph->getMatrix()[i][j];
@@ -56,28 +61,38 @@ void Heuristic::nearestNeighboor()
                 }
             }
 
+            // Verifica se o caminhão já entregou todas as demandas
             if(client == i)
-            {
-                // TODO: implementar quando a demanda não cabe
+            {   
+                if(visitedClients < model->getDimension()-1)
+                {
+                    // Adiciona o depósito no final da rota
+                    vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
+                    // Cria um novo caminhão
+                    createVehicle(this->vehicle->getCapacity());
+                    ++numberOfVehicles;
+                }
+                else
+                { 
+                    numberOfVehicles = 0;
+                }
+                break;
+                
             }
-
-            if ((*model->getClients()[client]).inRoute() == false)
+            else
             {
-                vehicle->setCarga((*model->getClients()[client]).getDemand());
+                vehicles[numberOfVehicles-1]->calculateCarga((*model->getClients()[client]).getDemand());
                 (*model->getClients()[client]).setInRoute();
-                vehicle->addClientToRoute((*model->getClients()[client]));
+                vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[client]));
             }
 
             ++visitedClients;
             
         }
-
+        // TODO: Adicionar o depósito no final da rota
+        // TODO: Criar metódo para printa a rota
         // Adiciona o depósito ao final da rota
-        vehicle->addClientToRoute((*model->getClients()[0]));
-        vehicle->printRoute();
+        // vehicle->addClientToRoute((*model->getClients()[0]));
+        // vehicle->printRoute();
     }
-    
-
-    
-    
 }

@@ -14,7 +14,7 @@ private:
     int capacity;
     int currentLocation;
     int carga;
-
+    
     std::vector<Client> route;
 
 public:
@@ -23,7 +23,8 @@ public:
     void setCurrentLocation(int currentLocation);
     void setCapacity(int capacity);
     void addClientToRoute(Client client);
-    void setCarga(int carga);
+    void setCarga();
+    void calculateCarga(int carga);
     void printRoute();
 
     int getCapacity();

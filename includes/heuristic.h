@@ -12,14 +12,18 @@ class Heuristic
 private:
     Model *model;
     Graph *graph;
-    Vehicle *vehicle;
+    Vehicle *vehicle = NULL;
+    std::vector<Vehicle*> vehicles;
 public:
-    Heuristic(Model *model, Graph *graph, Vehicle *vehicle);
+    Heuristic();
     ~Heuristic();
 
     void nearestNeighboor();
+    void addVehicle(Vehicle *v);
+    void setModel(Model *model);
+    void setGraph(Graph *graph);
+    void createVehicle(int);
 
-    bool everyoneVisited();
 };
 
 
