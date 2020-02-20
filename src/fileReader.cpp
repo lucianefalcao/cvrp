@@ -32,7 +32,7 @@ void readDimensionAndCapacity()
         {
             capacity = std::stoi(token);
             vehicle->setCapacity(capacity);
-            vehicle->setCarga();
+            vehicle->setLoad();
         }
     }
 }
@@ -60,7 +60,6 @@ void setClients()
     for(int i = 0; i < dimension; ++i)
     {
         f >> clientID;
-        std::cout << clientID;
         f >> clientDemand;
         client = new Client(clientID, clientDemand);
         model->addClients(client);

@@ -13,8 +13,8 @@ class Vehicle
 private:
     int capacity;
     int currentLocation;
-    int carga;
-    
+    int load;
+    int cost;
     std::vector<Client> route;
 
 public:
@@ -23,14 +23,18 @@ public:
     void setCurrentLocation(int currentLocation);
     void setCapacity(int capacity);
     void addClientToRoute(Client client);
-    void setCarga();
-    void calculateCarga(int carga);
-    void printRoute();
+    void setLoad();
+    void setCost(int cost);
+    void calculateLoad(int load);
+    void printRoute(std::vector<Vehicle*> v);
 
     int getCapacity();
     int getCurrentLocation();
+    int getCost();
 
-    bool fits(int demand);
+    bool CheckDelivery(int demand);
+
+    std::vector<Client> getRoute();
 };
 
 

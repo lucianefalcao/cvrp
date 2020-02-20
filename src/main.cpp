@@ -29,49 +29,40 @@ int main(int argc, char** argv)
         case 1:
             path += "P-n16-k8.txt";
             readFile(path);
-            std::exit(EXIT_SUCCESS);
-            break;
+            std::exit(0);
         case 2:
             path += "P-n19-k2.txt";
             readFile(path);
             std::exit(0);
-            break;
         case 3:
             path += "P-n20-k2.txt";
             readFile(path);
             std::exit(0);
-            break;
         case 4: 
             path += "P-n23-k8.txt";
             readFile(path);
             std::exit(0);
-            break;
         case 5:
             path += "P-n45-k5.txt";
             readFile(path);
             std::exit(0);
-            break;
         case 6:
             path += "P-n50-k10.txt";
             readFile(path);
             std::exit(0);
-            break;
         case 7:
             path += "P-n51-k10.txt";
             readFile(path);
             std::exit(0);
-            break;
         case 8:
             path += "P-n55-k7.txt";
             readFile(path);
             std::exit(0);
-            break;
         default:
             break;
         }
 
     }
-
 
     return 0;
 }

@@ -3,6 +3,7 @@
 Vehicle::Vehicle()
 {
     setCurrentLocation(0); // começa no depósito
+    this->cost = 0;
 }
 
 int Vehicle::getCapacity()
@@ -30,32 +31,58 @@ void Vehicle::addClientToRoute(Client client)
     this->route.push_back(client);
 }
 
-void Vehicle::setCarga()
+void Vehicle::setLoad()
 {
-    this->carga = capacity;
+    this->load = capacity;
 }
 
-void Vehicle::calculateCarga(int carga)
+void Vehicle::setCost(int cost)
 {
-    this->carga -= carga;
+    this->cost += cost;
 }
 
-bool Vehicle::fits(int demand)
+int Vehicle::getCost()
+{
+    return cost;
+}
+
+void Vehicle::calculateLoad(int load)
+{
+    this->load -= load;
+}
+
+bool Vehicle::CheckDelivery(int demand)
 {
     /* 
     se o caminho ainda tiver capacidade 
     atualiza a carga
     */
    
-    return (carga-demand) >= 0;
+    return (load-demand) >= 0;
 }
 
-void Vehicle::printRoute()
+std::vector<Client> Vehicle::getRoute()
 {
-    std::cout << '\n';
-    for (int i = 0; i < route.size(); ++i)
+    return route;
+}
+
+void Vehicle::printRoute(std::vector<Vehicle*> v)
+{
+    int totalCost = 0;
+    for (int i = 0; i < v.size(); ++i)
     {
-        std::cout << route[i].getID() << " -> ";
+        std::cout << "\nCaminhão " << i+1 << ": ";
+        for(int j = 0; j < v[i]->getRoute().size()-1; ++j)
+        {
+            std::cout << v[i]->getRoute()[j].getID() << " -> ";
+        }
+        std::cout << "0\n";
+        std::cout << "Clientes atendidos: " << v[i]->getRoute().size()-2 << '\n';
+        std::cout << "Custo da rota: " << v[i]->getCost() << "\n";
+        // std::cout << "\n";
+        totalCost += v[i]->getCost();
     }
+    std:: cout << '\n';
+    std::cout << "Custo total: "<< totalCost << "\n";
     
 }
