@@ -107,8 +107,15 @@ void Heuristic::nearestNeighboor()
         }
     }
     vehicle->printRoute(vehicles);
+
+    this->ins = new Insertion();
+    ins->setGraph(graph);
+    ins->printSolution(vehicles);
     this->opt = new TwoOpt();
     opt->setGraph(graph);
     opt->printSolution(vehicles);
+    this->s = new Swap();
+    s->setGraph(graph);
+    s->printSolution(vehicles);
     
 }
