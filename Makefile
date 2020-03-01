@@ -1,5 +1,5 @@
-main: fileReader.o main.o client.o vehicle.o model.o graph.o heuristic.o
-	g++ main.o fileReader.o client.o vehicle.o model.o graph.o heuristic.o -o main
+main: fileReader.o main.o client.o vehicle.o model.o graph.o heuristic.o twoOpt.o
+	g++ main.o fileReader.o client.o vehicle.o model.o graph.o heuristic.o twoOpt.o -o main
 
 main.o: src/main.cpp
 	g++ -c -g src/main.cpp
@@ -21,6 +21,9 @@ graph.o: src/graph.cpp includes/graph.h
 
 heuristic.o: src/heuristic.cpp includes/heuristic.h 
 	g++ -c -g src/heuristic.cpp
+
+twoOpt.o: src/twoOpt.cpp includes/twoOpt.h
+	g++ -c -g src/twoOpt.cpp
 
 clean:
 	rm -f *.o main 
