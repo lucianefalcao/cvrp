@@ -14,6 +14,11 @@ void Heuristic::setGraph(Graph *graph)
     this->graph = graph;
 }
 
+// void Heuristic::set2OPT()
+// {
+//     this->opt = new TwoOpt();
+// }
+
 void Heuristic::createVehicle(int capacity)
 {
     this->vehicle = new Vehicle();
@@ -68,7 +73,7 @@ void Heuristic::nearestNeighboor()
                 {
                     // Adiciona o depósito no final da rota
                     vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
-                    vehicles[numberOfVehicles-1]->setCost(graph->getMatrix()[client][0]);
+                    vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
                     // cost += graph->getMatrix()[client][0];
                     // Cria um novo caminhão
                     createVehicle(this->vehicle->getCapacity());
@@ -84,11 +89,10 @@ void Heuristic::nearestNeighboor()
             }
             else
             {
-                int d =(*model->getClients()[client]).getDemand();
-                vehicles[numberOfVehicles-1]->calculateLoad(d);
+                vehicles[numberOfVehicles-1]->calculateLoad((*model->getClients()[client]).getDemand());
                 (*model->getClients()[client]).setInRoute();
                 vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[client]));
-                vehicles[numberOfVehicles-1]->setCost(graph->getMatrix()[i][client]);
+                vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[i][client]);
             }
 
             ++visitedClients;
@@ -96,12 +100,15 @@ void Heuristic::nearestNeighboor()
             {
                 // Adiciona o depósito ao final da rota
                 vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
-                vehicles[numberOfVehicles-1]->setCost(graph->getMatrix()[client][0]);
+                vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
                 // Zera o números de veículos
                 numberOfVehicles = 0;
-            }
-            
+            }    
         }
     }
     vehicle->printRoute(vehicles);
+    this->opt = new TwoOpt();
+    opt->setGraph(graph);
+    opt->printSolution(vehicles);
+    
 }

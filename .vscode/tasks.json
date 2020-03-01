@@ -21,6 +21,7 @@
                 "${workspaceFolder}/src/client.cpp",
                 "${workspaceFolder}/src/graph.cpp",
                 "${workspaceFolder}/src/heuristic.cpp",
+                "${workspaceFolder}/src/twoOpt.cpp",
                 "-o",
                 "${workspaceFolder}/cvrp",
             ],

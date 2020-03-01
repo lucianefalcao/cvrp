@@ -7,6 +7,7 @@ Model *model = new Model();
 Graph *graph = new Graph();
 Vehicle *vehicle = new Vehicle();
 Client *client = NULL;
+TwoOpt *opt = new TwoOpt();
 
 /* 
    Ler a dimensão e capacidade do veículo.

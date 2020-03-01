@@ -1,5 +1,7 @@
 #include "../includes/vehicle.h"
 
+// TODO: criar função para calcular custos
+
 Vehicle::Vehicle()
 {
     setCurrentLocation(0); // começa no depósito
@@ -38,6 +40,16 @@ void Vehicle::setLoad()
 
 void Vehicle::setCost(int cost)
 {
+    this->cost = cost;
+}
+
+void Vehicle::setRoute(std::vector<Client> r)
+{
+    this->route = r;
+}
+
+void Vehicle::addCost(int cost)
+{
     this->cost += cost;
 }
 
@@ -65,6 +77,7 @@ std::vector<Client> Vehicle::getRoute()
 {
     return route;
 }
+
 
 void Vehicle::printRoute(std::vector<Vehicle*> v)
 {

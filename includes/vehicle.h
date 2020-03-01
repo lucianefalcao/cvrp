@@ -24,8 +24,11 @@ public:
     void setCapacity(int capacity);
     void addClientToRoute(Client client);
     void setLoad();
+    void setRoute(std::vector<Client>);
     void setCost(int cost);
     void calculateLoad(int load);
+    void addCost(int);
+    void calculateRouteCost(std::vector<Vehicle*> v);
     void printRoute(std::vector<Vehicle*> v);
 
     int getCapacity();
