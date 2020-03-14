@@ -16,7 +16,7 @@ public:
     Insertion(/* args */);
     
     void setGraph(Graph *graph);
-    void printSolution(std::vector<Vehicle*> v);
+    void buildSolution(std::vector<Vehicle*> v);
 
     int getMovement(std::vector<Client>& route, int currentDistance);
 

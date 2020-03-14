@@ -6,6 +6,7 @@
 #include "vehicle.h"
 #include "swap.h"
 #include "insertion.h"
+#include "util.h"
 
 #include <limits>
 

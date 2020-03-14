@@ -110,12 +110,15 @@ void Heuristic::nearestNeighboor()
 
     this->s = new Swap();
     s->setGraph(graph);
-    s->printSolution(vehicles);
-    /* this->ins = new Insertion();
+    s->buildSolution(vehicles);
+    printSolution(vehicles, "Swap");
+    this->ins = new Insertion();
     ins->setGraph(graph);
-    ins->printSolution(vehicles); */
+    ins->buildSolution(vehicles);
+    printSolution(vehicles, "Reinsertion");
     this->opt = new TwoOpt();
     opt->setGraph(graph);
-    opt->printSolution(vehicles);
+    opt->buildSolution(vehicles);
+    printSolution(vehicles, "2-OPT");
     
 }

@@ -24,6 +24,7 @@
                 "${workspaceFolder}/src/twoOpt.cpp",
                 "${workspaceFolder}/src/swap.cpp",
                 "${workspaceFolder}/src/insertion.cpp",
+                "${workspaceFolder}/src/util.cpp",
                 "-o",
                 "${workspaceFolder}/cvrp",
             ],

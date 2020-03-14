@@ -38,7 +38,6 @@ int TwoOpt::getMovement(std::vector<Client>& route, int currentDistance)
     int bestDistance = currentDistance;
     bool changed = false;
 
-    //FIXME: calculo do custo está possivelmente errado
 
     for(int i = 1; i < route.size()-1; ++i)
     {
@@ -69,25 +68,13 @@ int TwoOpt::getMovement(std::vector<Client>& route, int currentDistance)
     return bestDistance;
 }
 
-void TwoOpt::printSolution(std::vector<Vehicle*> v)
+void TwoOpt::buildSolution(std::vector<Vehicle*> v)
 {
     std::vector<Client> r;
-    int totalCost = 0;
-    std::cout << "\n2 OPT: \n";
     for (int i = 0; i < v.size(); ++i)
     {
         r = v[i]->getRoute();
         v[i]->setCost(getMovement(r, v[i]->getCost()));
         v[i]->setRoute(r);
-        std::cout << "\nCaminhão " << i+1 << ": ";
-        for(int j = 0; j < v[i]->getRoute().size()-1; ++j)
-        {
-            std::cout << v[i]->getRoute()[j].getID() << " -> ";
-        }
-        std::cout << "0\n";
-        std::cout << "Custo da rota: " << v[i]->getCost() << "\n";
-        totalCost += v[i]->getCost();
     }
-    std:: cout << '\n';
-    std::cout << "Custo total: "<< totalCost << "\n";
 }
