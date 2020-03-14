@@ -33,7 +33,12 @@ void Vehicle::addClientToRoute(Client client)
     this->route.push_back(client);
 }
 
-void Vehicle::setLoad()
+int Vehicle::getLoad()
+{
+    return load;
+}
+
+void Vehicle::setLoad(int capacity)
 {
     this->load = capacity;
 }

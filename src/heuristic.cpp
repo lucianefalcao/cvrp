@@ -23,7 +23,7 @@ void Heuristic::createVehicle(int capacity)
 {
     this->vehicle = new Vehicle();
     vehicle->setCapacity(capacity);
-    vehicle->setLoad();
+    vehicle->setLoad(capacity);
     // Adiciona o depósito como o início da rota
     vehicle->addClientToRoute((*model->getClients()[0]));
     addVehicle(vehicle);
@@ -108,14 +108,14 @@ void Heuristic::nearestNeighboor()
     }
     vehicle->printRoute(vehicles);
 
-    this->ins = new Insertion();
-    ins->setGraph(graph);
-    ins->printSolution(vehicles);
-    this->opt = new TwoOpt();
-    opt->setGraph(graph);
-    opt->printSolution(vehicles);
     this->s = new Swap();
     s->setGraph(graph);
     s->printSolution(vehicles);
+    /* this->ins = new Insertion();
+    ins->setGraph(graph);
+    ins->printSolution(vehicles); */
+    this->opt = new TwoOpt();
+    opt->setGraph(graph);
+    opt->printSolution(vehicles);
     
 }

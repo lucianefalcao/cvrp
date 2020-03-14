@@ -15,8 +15,7 @@ public:
 
     void setGraph(Graph *graph);
     void printSolution(std::vector<Vehicle*> v);
-
-    int getMovement(std::vector<Client>&, int);
+    void getMovement(std::vector<Client>&, std::vector<Client>&, int*, int*, int, int*, int*);
 };
 
 

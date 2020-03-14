@@ -33,7 +33,7 @@ void readDimensionAndCapacity()
         {
             capacity = std::stoi(token);
             vehicle->setCapacity(capacity);
-            vehicle->setLoad();
+            vehicle->setLoad(capacity);
         }
     }
 }

@@ -33,6 +33,8 @@ std::vector<Client> Insertion::move(std::vector<Client>& route, int i, int j)
 
 int Insertion::getMovement(std::vector<Client>& route, int currentDistance)
 {
+
+    //FIXME: calculo do custo está possivelmente errado
     int bestDistance = currentDistance;
     int aux = 0; 
     int before, after;

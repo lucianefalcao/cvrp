@@ -23,7 +23,7 @@ public:
     void setCurrentLocation(int currentLocation);
     void setCapacity(int capacity);
     void addClientToRoute(Client client);
-    void setLoad();
+    void setLoad(int);
     void setRoute(std::vector<Client>);
     void setCost(int cost);
     void calculateLoad(int load);
@@ -34,6 +34,7 @@ public:
     int getCapacity();
     int getCurrentLocation();
     int getCost();
+    int getLoad();
 
     bool CheckDelivery(int demand);
 

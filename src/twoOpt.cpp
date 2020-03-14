@@ -38,6 +38,8 @@ int TwoOpt::getMovement(std::vector<Client>& route, int currentDistance)
     int bestDistance = currentDistance;
     bool changed = false;
 
+    //FIXME: calculo do custo está possivelmente errado
+
     for(int i = 1; i < route.size()-1; ++i)
     {
          for (int j = i+1; j < route.size()-1; ++j)
