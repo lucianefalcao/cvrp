@@ -1,7 +1,5 @@
 #include "../includes/heuristic.h"
 
-// TODO: adicionar comentários
-
 Heuristic::Heuristic(){}
 
 void Heuristic::setModel(Model *model)
@@ -13,11 +11,6 @@ void Heuristic::setGraph(Graph *graph)
 {
     this->graph = graph;
 }
-
-// void Heuristic::set2OPT()
-// {
-//     this->opt = new TwoOpt();
-// }
 
 void Heuristic::createVehicle(int capacity)
 {
@@ -38,7 +31,7 @@ void Heuristic::nearestNeighboor()
 {
     int i, client;
     int visitedClients = 0;
-    // O problema tem pelo menos um caminho
+    // O problema tem pelo menos um caminhão
     int numberOfVehicles = 1;
 
     while (numberOfVehicles)
@@ -74,7 +67,6 @@ void Heuristic::nearestNeighboor()
                     // Adiciona o depósito no final da rota
                     vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
                     vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
-                    // cost += graph->getMatrix()[client][0];
                     // Cria um novo caminhão
                     createVehicle(this->vehicle->getCapacity());
                     ++numberOfVehicles;
@@ -106,19 +98,11 @@ void Heuristic::nearestNeighboor()
             }    
         }
     }
-    vehicle->printRoute(vehicles);
 
-    this->s = new Swap();
-    s->setGraph(graph);
-    s->buildSolution(vehicles);
-    printSolution(vehicles, "Swap");
-    this->ins = new Insertion();
-    ins->setGraph(graph);
-    ins->buildSolution(vehicles);
-    printSolution(vehicles, "Reinsertion");
-    this->opt = new TwoOpt();
-    opt->setGraph(graph);
-    opt->buildSolution(vehicles);
-    printSolution(vehicles, "2-OPT");
-    
+    printSolution(vehicles, "nearest nbd");
+    int totalCost = vehicle->getTotalCost(vehicles);
+    this->localSearch = new LocalSearch(graph);
+    localSearch->vnd(vehicles, totalCost);
+    printSolution(vehicles, "final");
+
 }

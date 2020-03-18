@@ -25,6 +25,7 @@
                 "${workspaceFolder}/src/swap.cpp",
                 "${workspaceFolder}/src/insertion.cpp",
                 "${workspaceFolder}/src/util.cpp",
+                "${workspaceFolder}/src/localSearch.cpp",
                 "-o",
                 "${workspaceFolder}/cvrp",
             ],

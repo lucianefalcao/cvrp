@@ -22,15 +22,15 @@ public:
 
     void setCurrentLocation(int currentLocation);
     void setCapacity(int capacity);
-    void addClientToRoute(Client client);
     void setLoad(int);
     void setRoute(std::vector<Client>);
     void setCost(int cost);
-    void calculateLoad(int load);
+    void addClientToRoute(Client client);
     void addCost(int);
+    void calculateLoad(int load);
     void calculateRouteCost(std::vector<Vehicle*> v);
-    void printRoute(std::vector<Vehicle*> v);
 
+    int getTotalCost(std::vector<Vehicle*> v);
     int getCapacity();
     int getCurrentLocation();
     int getCost();

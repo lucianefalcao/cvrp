@@ -84,23 +84,14 @@ std::vector<Client> Vehicle::getRoute()
 }
 
 
-void Vehicle::printRoute(std::vector<Vehicle*> v)
+
+int Vehicle::getTotalCost(std::vector<Vehicle*> v)
 {
     int totalCost = 0;
     for (int i = 0; i < v.size(); ++i)
     {
-        std::cout << "\nCaminhão " << i+1 << ": ";
-        for(int j = 0; j < v[i]->getRoute().size()-1; ++j)
-        {
-            std::cout << v[i]->getRoute()[j].getID() << " -> ";
-        }
-        std::cout << "0\n";
-        std::cout << "Clientes atendidos: " << v[i]->getRoute().size()-2 << '\n';
-        std::cout << "Custo da rota: " << v[i]->getCost() << "\n";
-        // std::cout << "\n";
         totalCost += v[i]->getCost();
     }
-    std:: cout << '\n';
-    std::cout << "Custo total: "<< totalCost << "\n";
     
+    return totalCost;
 }

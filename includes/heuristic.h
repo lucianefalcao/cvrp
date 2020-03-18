@@ -2,11 +2,10 @@
 #define HEURISTIC_H
 
 #include "model.h"
-#include "twoOpt.h"
+#include "graph.h"
 #include "vehicle.h"
-#include "swap.h"
-#include "insertion.h"
 #include "util.h"
+#include "localSearch.h"
 
 #include <limits>
 
@@ -15,9 +14,7 @@ class Heuristic
 private:
     Model *model;
     Graph *graph;
-    TwoOpt *opt;
-    Swap *s;
-    Insertion *ins;
+    LocalSearch *localSearch;
     Vehicle *vehicle = NULL;
     std::vector<Vehicle*> vehicles;
 public:
@@ -28,8 +25,6 @@ public:
     void addVehicle(Vehicle *v);
     void setModel(Model *model);
     void setGraph(Graph *graph);
-    void set2OPT(TwoOpt *opt);
-    void setSwap(Swap *s);
     void createVehicle(int);
 
 };

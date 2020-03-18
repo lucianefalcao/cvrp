@@ -14,8 +14,9 @@ public:
     Swap(/* args */);
 
     void setGraph(Graph *graph);
-    void getMovement(std::vector<Client>&, std::vector<Client>&, int*, int*, int, int*, int*);
-    void buildSolution(std::vector<Vehicle*> v);
+    void getMovement(std::vector<Client>&, std::vector<Client>&, int*, int*, int*, int*);
+
+    int buildSolution(std::vector<Vehicle*> v);
 };
 
 

@@ -17,8 +17,8 @@ public:
     TwoOpt(/* args */);
 
     void setGraph(Graph *graph);
-    void buildSolution(std::vector<Vehicle*> v);
 
+    int buildSolution(std::vector<Vehicle*> v);
     int getMovement(std::vector<Client>&, int);
 
     std::vector<Client> change(std::vector<Client>&, int, int);
