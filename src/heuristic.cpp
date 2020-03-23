@@ -14,12 +14,12 @@ void Heuristic::setGraph(Graph *graph)
 
 void Heuristic::createVehicle(int capacity)
 {
-    this->vehicle = new Vehicle();
-    vehicle->setCapacity(capacity);
-    vehicle->setLoad(capacity);
+    this->vehicleAux = new Vehicle();
+    vehicleAux->setCapacity(capacity);
+    vehicleAux->setLoad(capacity);
     // Adiciona o depósito como o início da rota
-    vehicle->addClientToRoute((*model->getClients()[0]));
-    addVehicle(vehicle);
+    vehicleAux->addClientToRoute((*model->getClients()[0]));
+    addVehicle(vehicleAux);
 }
 
 void Heuristic::addVehicle(Vehicle *v)
@@ -68,7 +68,7 @@ void Heuristic::nearestNeighboor()
                     vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
                     vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
                     // Cria um novo caminhão
-                    createVehicle(this->vehicle->getCapacity());
+                    createVehicle(this->vehicleAux->getCapacity());
                     ++numberOfVehicles;
                 }
                 else
@@ -99,10 +99,10 @@ void Heuristic::nearestNeighboor()
         }
     }
 
-    printSolution(vehicles, "nearest nbd");
-    int totalCost = vehicle->getTotalCost(vehicles);
-    this->localSearch = new LocalSearch(graph);
-    localSearch->vnd(vehicles, totalCost);
+    int totalCost = printSolution(vehicles, "nearest nbd");
+    LocalSearch *localSearch = new LocalSearch(graph);
+    buildInterSolution(vehicles, localSearch);
+    buildIntraSolution(vehicles, localSearch);
     printSolution(vehicles, "final");
 
 }

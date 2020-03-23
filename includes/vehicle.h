@@ -12,7 +12,6 @@ class Vehicle
 {
 private:
     int capacity;
-    int currentLocation;
     int load;
     int cost;
     std::vector<Client> route;
@@ -20,7 +19,6 @@ private:
 public:
     Vehicle();
 
-    void setCurrentLocation(int currentLocation);
     void setCapacity(int capacity);
     void setLoad(int);
     void setRoute(std::vector<Client>);
@@ -28,11 +26,8 @@ public:
     void addClientToRoute(Client client);
     void addCost(int);
     void calculateLoad(int load);
-    void calculateRouteCost(std::vector<Vehicle*> v);
 
-    int getTotalCost(std::vector<Vehicle*> v);
     int getCapacity();
-    int getCurrentLocation();
     int getCost();
     int getLoad();
 

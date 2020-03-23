@@ -10,7 +10,9 @@ void Reinsertion::setGraph(Graph *graph)
 std::vector<Client> Reinsertion::move(std::vector<Client>& route, int i, int j)
 {
     std::vector<Client> newRoute;
-    for (int k = 0; k < i; ++k)
+    newRoute.push_back(route[0]);
+    
+    for (int k = 1; k < i; ++k)
     {
         newRoute.push_back(route[k]);
     }

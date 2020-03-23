@@ -17,7 +17,8 @@ private:
 public:
     LocalSearch(Graph *graph);
     ~LocalSearch();
-    void vnd(std::vector<Vehicle*> v, int);
+    void intraVND(std::vector<Client>& route, int*);
+    void interVND(std::vector<Client>& routeA, std::vector<Client>& routeB, int *Acost, int *Bcost, int *loadA, int *loadB);
     void set2OPT();
     void setSwap();
     void setReinsertion();

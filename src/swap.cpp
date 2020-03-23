@@ -7,12 +7,11 @@ void Swap::setGraph(Graph *graph)
     this->graph = graph;
 }
 
-void Swap::getMovement(std::vector<Client>& routeA, std::vector<Client>& routeB, int *Acost, int *Bcost, int *loadA, int *loadB)
+void Swap::getMovementInter(std::vector<Client>& routeA, std::vector<Client>& routeB, int *Acost, int *Bcost, int *loadA, int *loadB)
 {
 
     // TODO: implementar para pegar todas as rotas -> usando for v.size()
     int beforeA, beforeB, afterA, afterB;
-    bool change = false;
 
     for (int i = 1; i < routeA.size()-1; ++i)
     {
@@ -38,7 +37,6 @@ void Swap::getMovement(std::vector<Client>& routeA, std::vector<Client>& routeB,
                 
                 if((afterA < beforeA) && (afterB < beforeB))
                 {
-                    change = true;
                     *Acost -= beforeA - afterA;
                     *Bcost -= beforeB - afterB;
                     *loadA = routeA[i].getDemand() + *loadA;
@@ -53,34 +51,37 @@ void Swap::getMovement(std::vector<Client>& routeA, std::vector<Client>& routeB,
     }
 }
 
-int Swap::buildSolution(std::vector<Vehicle*> v)
+int Swap::getMovementIntra(std::vector<Client>& route, int currentDistance)
 {
-    int Acost, Bcost;
-    int totalCost = 0;
-    std::vector<Client> a, b;
+    int bestDistance = currentDistance;
+    bool change = false;
 
-    for (int k = 0; k < v.size(); ++k)
+    for (int i = 1; i < route.size()-1; ++i)
     {
-        Acost = v[k]->getCost(); // custo da rota A
-        a = v[k]->getRoute(); // rota A
-        int loadA = v[k]->getLoad(); // Capacidade restante do veículo A
-        for (int l = k+1; l < v.size(); ++l)
+        for (int j = i+1; j < route.size()-1; ++j)
         {
-            Bcost = v[l]->getCost(); // custo da rota B
-            b = v[l]->getRoute(); // rota B
-            int loadB = v[l]->getLoad(); // Capacidade restante do veículo B
-            getMovement(a, b, &Acost, &Bcost, &loadA, &loadB);
-            // Atualiza os valores dos veículos A e B 
-            v[k]->setRoute(a);
-            v[l]->setRoute(b);
-            v[k]->setCost(Acost);
-            v[l]->setCost(Bcost);
-            v[k]->setLoad(loadA);
-            v[l]->setLoad(loadB);
-        }
+                int before = graph->getMatrix()[route[i].getID()][route[i-1].getID()] +  // *
+                             graph->getMatrix()[route[i].getID()][route[i+1].getID()] +
+                             graph->getMatrix()[route[j].getID()][route[j-1].getID()] + 
+                             graph->getMatrix()[route[j].getID()][route[j+1].getID()];   // *
 
-        totalCost += v[k]->getCost();
+                std::swap(route[i], route[j]);
+                
+                int after = graph->getMatrix()[route[i].getID()][route[i-1].getID()] + 
+                            graph->getMatrix()[route[i].getID()][route[i+1].getID()] +
+                            graph->getMatrix()[route[j].getID()][route[j-1].getID()] + 
+                            graph->getMatrix()[route[j].getID()][route[j+1].getID()];
+
+                if(after < before)
+                {
+                    change = true;
+                    bestDistance += after-before; 
+                }
+                else
+                {
+                    std::swap(route[i], route[j]);
+                }
+        }   
     }
-
-    return totalCost;
+    return bestDistance;
 }

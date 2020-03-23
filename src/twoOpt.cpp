@@ -36,8 +36,6 @@ std::vector<Client> TwoOpt::change(std::vector<Client>& route, int i, int j)
 int TwoOpt::getMovement(std::vector<Client>& route, int currentDistance)
 {
     int bestDistance = currentDistance;
-    bool changed = false;
-
 
     for(int i = 1; i < route.size()-1; ++i)
     {
@@ -58,27 +56,10 @@ int TwoOpt::getMovement(std::vector<Client>& route, int currentDistance)
 
             if(after < before)
             {
-                changed = true;
                 bestDistance += (after-before);
                 route = newRoute; 
             }
          } 
     }
     return bestDistance;
-}
-
-int TwoOpt::buildSolution(std::vector<Vehicle*> v)
-{
-    int totalCost = 0;
-    std::vector<Client> r;
-
-    for (int i = 0; i < v.size(); ++i)
-    {
-        r = v[i]->getRoute();
-        v[i]->setCost(getMovement(r, v[i]->getCost()));
-        v[i]->setRoute(r);
-        totalCost += v[i]->getCost();
-    }
-
-    return totalCost;
 }

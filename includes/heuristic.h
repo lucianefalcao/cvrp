@@ -15,7 +15,7 @@ private:
     Model *model;
     Graph *graph;
     LocalSearch *localSearch;
-    Vehicle *vehicle = NULL;
+    Vehicle *vehicleAux = NULL;
     std::vector<Vehicle*> vehicles;
 public:
     Heuristic();
