@@ -43,7 +43,7 @@ int buildIntraSolution(std::vector<Vehicle*> v, LocalSearch *search)
     {
         r = v[i]->getRoute();
         distance = v[i]->getCost();
-        search->vnd(r, &distance);
+        search->intraVND(r, &distance);
         v[i]->setRoute(r);
         v[i]->setCost(distance);
         totalCost += v[i]->getCost();

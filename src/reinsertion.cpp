@@ -79,19 +79,3 @@ int Reinsertion::getMovement(std::vector<Client>& route, int currentDistance)
     }
     return bestDistance;
 }
-
-int Reinsertion::buildSolution(std::vector<Vehicle*> v)
-{
-    int totalCost = 0;
-    std::vector<Client> r;
-
-    for (int i = 0; i < v.size(); ++i)
-    {
-        r = v[i]->getRoute();
-        v[i]->setCost(getMovement(r, v[i]->getCost()));
-        v[i]->setRoute(r);
-        totalCost += v[i]->getCost();
-    }
-    
-    return totalCost;
-}
