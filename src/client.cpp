@@ -22,7 +22,7 @@ bool Client::inRoute()
     return wasVisited;
 }
 
-void Client::setInRoute()
+void Client::setInRoute(bool inRoute)
 {
-    wasVisited = true;
+    wasVisited = inRoute;
 }

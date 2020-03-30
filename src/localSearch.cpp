@@ -93,6 +93,7 @@ void LocalSearch::intraVND(std::vector<Client>& route, int *currentDistance)
                     break;
                 case 3:
                     bestDistance = swap->getMovementIntra(route, *currentDistance);
+                    break;
                 default:
                     break;
             }

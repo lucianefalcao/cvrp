@@ -27,82 +27,106 @@ void Heuristic::addVehicle(Vehicle *v)
     vehicles.push_back(v);
 }
 
-void Heuristic::nearestNeighboor()
+void Heuristic::nearestNeighboor(int iterations)
 {
-    int i, client;
-    int visitedClients = 0;
-    // O problema tem pelo menos um caminhão
-    int numberOfVehicles = 1;
+    std::chrono::duration<double, std::milli> hc;
+    std::chrono::duration<double, std::milli> vnd;
 
-    while (numberOfVehicles)
+    for(int k = 0; k < iterations; ++k)
     {
-        client = 0;
+        // Guarda o tempo inicial da heurística
+        auto startT1 = std::chrono::high_resolution_clock::now();
+        int i, client = 0;
+        int visitedClients = 0;
+        // O problema tem pelo menos um caminhão
+        int numberOfVehicles = 1;
+        bool change;
 
-
-        while (visitedClients < model->getDimension()-1)
+        while (numberOfVehicles && (visitedClients < model->getDimension()-1))
         {
             i = client;
+            change = false;
             int shortestDistance = std::numeric_limits<int>::max();
 
             for (int j = 1; j < model->getDimension(); ++j)
             {
-                if((graph->getMatrix()[i][j] != 0) && (graph->getMatrix()[i][j] < shortestDistance)) 
+                if((graph->getMatrix()[i][j] != 0) && (graph->getMatrix()[i][j] < shortestDistance) && 
+                (*model->getClients()[j]).inRoute() == false) 
                 {
-                    if((*model->getClients()[j]).inRoute() == false)
+                    if (vehicles[numberOfVehicles-1]->CheckDelivery((*model->getClients()[j]).getDemand()))
                     {
-                        if (vehicles[numberOfVehicles-1]->CheckDelivery((*model->getClients()[j]).getDemand()))
-                        {
-                            client = j;
-                            shortestDistance = graph->getMatrix()[i][j];
-                        }
+                        client = j;
+                        shortestDistance = graph->getMatrix()[i][j];
+                        change = true;
                     }
                 }
             }
 
-            // Verifica se o caminhão já entregou todas as demandas
-            if(client == i)
-            {   
-                if(visitedClients < model->getDimension()-1)
-                {
-                    // Adiciona o depósito no final da rota
-                    vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
-                    vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
-                    // Cria um novo caminhão
-                    createVehicle(this->vehicleAux->getCapacity());
-                    ++numberOfVehicles;
-                }
-                else
-                { 
-                    // Verificar
-                    numberOfVehicles = 0;
-                }
-                break;
-                
+            if(change)
+            {
+                vehicles[numberOfVehicles-1]->calculateLoad((*model->getClients()[client]).getDemand());
+                (*model->getClients()[client]).setInRoute(true);
+                vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[client]));
+                vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[i][client]);
+                ++visitedClients;
             }
             else
             {
-                vehicles[numberOfVehicles-1]->calculateLoad((*model->getClients()[client]).getDemand());
-                (*model->getClients()[client]).setInRoute();
-                vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[client]));
-                vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[i][client]);
-            }
-
-            ++visitedClients;
-            if(visitedClients == model->getDimension()-1)
-            {
-                // Adiciona o depósito ao final da rota
+                // Adiciona o depósito no final da rota
                 vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
                 vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
-                // Zera o números de veículos
-                numberOfVehicles = 0;
-            }    
+                // Cria um novo caminhão
+                createVehicle(this->vehicleAux->getCapacity());
+                ++numberOfVehicles;
+                client = 0;
+            }
         }
+
+        // Adiciona o depósito ao final da rota
+        vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
+        vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
+
+        int totalCost = printSolution(vehicles, "nearest nbd");
+
+        // Guarda o tempo final da heurística
+        auto endT1 = std::chrono::high_resolution_clock::now();
+        // calcula a duração da heurística
+
+        if(!k)
+            hc = (endT1 - startT1);
+        else
+            hc += (endT1 - startT1);
+        
+        LocalSearch *localSearch = new LocalSearch(graph);
+        buildInterSolution(vehicles, localSearch);
+        buildIntraSolution(vehicles, localSearch);
+        printSolution(vehicles, "final");
+
+
+        auto endT2 = std::chrono::high_resolution_clock::now();
+        
+
+        if(!k)
+            vnd = (endT2-startT1);
+        else
+            vnd += (endT2-startT1);
+
+        erase();
     }
 
-    int totalCost = printSolution(vehicles, "nearest nbd");
-    LocalSearch *localSearch = new LocalSearch(graph);
-    buildInterSolution(vehicles, localSearch);
-    buildIntraSolution(vehicles, localSearch);
-    printSolution(vehicles, "final");
+    
+    std::cout << "A heurística levou em média " << hc.count() / iterations << " ms\n";  
+    // guarda o tempo final da heuristica + vnd
+    std::cout << "A heurística + vnd levou em média " << vnd.count() / iterations << " ms\n";  
 
+}
+
+void Heuristic::erase()
+{
+    vehicles.clear();
+    createVehicle(this->vehicleAux->getCapacity());
+    for(Client *x : model->getClients())
+    {
+        x->setInRoute(false);
+    }
 }

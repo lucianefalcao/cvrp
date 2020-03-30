@@ -10,7 +10,7 @@ private:
 public:
     Client(int id, int demand);
 
-    void setInRoute();
+    void setInRoute(bool);
 
     int getID();
     int getDemand();

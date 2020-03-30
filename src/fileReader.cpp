@@ -2,6 +2,8 @@
 
 int dimension;
 int capacity;
+float timeMedia = 0.0;
+std::chrono::duration<float> sum;
 std::fstream f;
 Model *model = new Model();
 Graph *graph = new Graph();
@@ -49,7 +51,7 @@ void readMatrix()
 }
 
 // Abre o arquivo e lê os dados
-void readFile(std::string fileName)
+void readFile(std::string fileName, int iterations)
 {
 
     std::string aux;
@@ -77,6 +79,7 @@ void readFile(std::string fileName)
         h->setModel(model);
         h->setGraph(graph);
         h->createVehicle(capacity);
-        h->nearestNeighboor();
+
+        h->nearestNeighboor(iterations);
     }
 }

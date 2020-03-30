@@ -10,7 +10,7 @@
 #include <cstring>
 #include <sstream>
 
-void readFile(std::string);
+void readFile(std::string, int);
 void readDimensionAndCapacity();
 void skipLine(int lines);
 void setClients();
