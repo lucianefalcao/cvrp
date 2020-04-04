@@ -41,23 +41,47 @@ void Heuristic::nearestNeighboor(int iterations)
         // O problema tem pelo menos um caminhão
         int numberOfVehicles = 1;
         bool change;
-
+        int c[model->getDimension()-1];
+        int aux;
+        int s;
         while (numberOfVehicles && (visitedClients < model->getDimension()-1))
         {
+            s = 0;
             i = client;
             change = false;
             int shortestDistance = std::numeric_limits<int>::max();
 
             for (int j = 1; j < model->getDimension(); ++j)
             {
+                // graph->getFirstRow();
                 if((graph->getMatrix()[i][j] != 0) && (graph->getMatrix()[i][j] < shortestDistance) && 
                 (*model->getClients()[j]).inRoute() == false) 
                 {
-                    if (vehicles[numberOfVehicles-1]->CheckDelivery((*model->getClients()[j]).getDemand()))
+                    if(!visitedClients && !i) 
                     {
-                        client = j;
-                        shortestDistance = graph->getMatrix()[i][j];
-                        change = true;
+                        c[s] = j;
+                        ++s;
+                        if(s == model->getDimension()-1)
+                        {
+                            aux = rand() % model->getDimension()-1;
+                            aux = aux < 0 ? 0 : aux;
+                            aux = c[aux];
+                            if (vehicles[numberOfVehicles-1]->CheckDelivery((*model->getClients()[aux]).getDemand()))
+                            {
+                                client = aux;
+                                shortestDistance = graph->getMatrix()[i][aux];
+                                change = true;
+                            }
+                        }
+                    }
+                    else 
+                    {
+                        if (vehicles[numberOfVehicles-1]->CheckDelivery((*model->getClients()[j]).getDemand()))
+                        {
+                            client = j;
+                            shortestDistance = graph->getMatrix()[i][j];
+                            change = true;
+                        }
                     }
                 }
             }
@@ -85,6 +109,8 @@ void Heuristic::nearestNeighboor(int iterations)
         // Adiciona o depósito ao final da rota
         vehicles[numberOfVehicles-1]->addClientToRoute((*model->getClients()[0]));
         vehicles[numberOfVehicles-1]->addCost(graph->getMatrix()[client][0]);
+
+        std::cout << "\n>>>>>>> " << k << " <<<<<<<" << "\n";
 
         int totalCost = printSolution(vehicles, "nearest nbd");
 

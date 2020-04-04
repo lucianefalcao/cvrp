@@ -9,6 +9,8 @@
 
 #include <limits>
 #include <chrono>
+#include <stdlib.h>
+#include <random>
 
 class Heuristic
 {

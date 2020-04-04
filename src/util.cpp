@@ -14,7 +14,7 @@ int getTotalCost(std::vector<Vehicle*> v)
 int printSolution(std::vector<Vehicle*> v, std::string nbd)
 {
     int totalCost = 0;
-    std::cout << "\n" << nbd << ":\n";
+    std::cout << "\n>>>>>>>>" << nbd << "<<<<<<<<<\n";
 
     for (int i = 0; i < v.size(); ++i)
     {
