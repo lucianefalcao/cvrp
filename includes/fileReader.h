@@ -11,8 +11,6 @@
 #include <sstream>
 
 void readFile(std::string, int);
-void readDimensionAndCapacity();
-void skipLine(int lines);
 void setClients();
 void readMatrix();
 

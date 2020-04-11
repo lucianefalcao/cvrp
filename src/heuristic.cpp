@@ -41,37 +41,34 @@ void Heuristic::nearestNeighboor(int iterations)
         // O problema tem pelo menos um caminhão
         int numberOfVehicles = 1;
         bool change;
-        int c[model->getDimension()-1];
-        int aux;
-        int s;
-        while (numberOfVehicles && (visitedClients < model->getDimension()-1))
+    
+        int aux[model->getDimension()-1];
+        int random;
+
+
+        while ((visitedClients < model->getDimension()-1))
         {
-            s = 0;
             i = client;
             change = false;
             int shortestDistance = std::numeric_limits<int>::max();
 
             for (int j = 1; j < model->getDimension(); ++j)
             {
-                // graph->getFirstRow();
                 if((graph->getMatrix()[i][j] != 0) && (graph->getMatrix()[i][j] < shortestDistance) && 
                 (*model->getClients()[j]).inRoute() == false) 
                 {
                     if(!visitedClients && !i) 
                     {
-                        c[s] = j;
-                        ++s;
-                        if(s == model->getDimension()-1)
+                        aux[j-1] = j;
+                        
+                        if(j == model->getDimension()-1)
                         {
-                            aux = rand() % model->getDimension()-1;
-                            aux = aux < 0 ? 0 : aux;
-                            aux = c[aux];
-                            if (vehicles[numberOfVehicles-1]->CheckDelivery((*model->getClients()[aux]).getDemand()))
-                            {
-                                client = aux;
-                                shortestDistance = graph->getMatrix()[i][aux];
-                                change = true;
-                            }
+                            random = rand() % model->getDimension() - 1;
+                            random = random < 0 ? 0 : random;
+                            random = aux[random];
+                            client = random;
+                            shortestDistance = graph->getMatrix()[i][random];
+                            change = true;
                         }
                     }
                     else 
@@ -112,7 +109,7 @@ void Heuristic::nearestNeighboor(int iterations)
 
         std::cout << "\n>>>>>>> " << k << " <<<<<<<" << "\n";
 
-        int totalCost = printSolution(vehicles, "nearest nbd");
+        printSolution(vehicles, "nearest nbd");
 
         // Guarda o tempo final da heurística
         auto endT1 = std::chrono::high_resolution_clock::now();
@@ -141,7 +138,7 @@ void Heuristic::nearestNeighboor(int iterations)
     }
 
     
-    std::cout << "A heurística levou em média " << hc.count() / iterations << " ms\n";  
+    std::cout << "\nA heurística levou em média " << hc.count() / iterations << " ms\n";  
     // guarda o tempo final da heuristica + vnd
     std::cout << "A heurística + vnd levou em média " << vnd.count() / iterations << " ms\n";  
 

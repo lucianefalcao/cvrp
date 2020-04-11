@@ -54,7 +54,6 @@ void Swap::getMovementInter(std::vector<Client>& routeA, std::vector<Client>& ro
 int Swap::getMovementIntra(std::vector<Client>& route, int currentDistance)
 {
     int bestDistance = currentDistance;
-    bool change = false;
 
     for (int i = 1; i < route.size()-1; ++i)
     {
@@ -74,7 +73,6 @@ int Swap::getMovementIntra(std::vector<Client>& route, int currentDistance)
 
                 if(after < before)
                 {
-                    change = true;
                     bestDistance += after-before; 
                 }
                 else

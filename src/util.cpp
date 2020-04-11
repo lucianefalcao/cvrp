@@ -1,20 +1,9 @@
 #include "../includes/util.h"
 
-int getTotalCost(std::vector<Vehicle*> v)
-{
-    int totalCost = 0;
-    for (int i = 0; i < v.size(); ++i)
-    {
-        totalCost += v[i]->getCost();
-    }
-    
-    return totalCost;
-}
-
 int printSolution(std::vector<Vehicle*> v, std::string nbd)
 {
     int totalCost = 0;
-    std::cout << "\n>>>>>>>>" << nbd << "<<<<<<<<<\n";
+    std::cout << "\n" << nbd << "\n";
 
     for (int i = 0; i < v.size(); ++i)
     {
@@ -29,25 +18,6 @@ int printSolution(std::vector<Vehicle*> v, std::string nbd)
     }
     std:: cout << '\n';
     std::cout << "Custo total: "<< totalCost << "\n";
-
-    return totalCost;
-}
-
-int buildIntraSolution(std::vector<Vehicle*> v, LocalSearch *search)
-{
-    int totalCost = 0;
-    int distance;
-    std::vector<Client> r;
-    
-    for(int i = 0; i < v.size(); ++i)
-    {
-        r = v[i]->getRoute();
-        distance = v[i]->getCost();
-        search->intraVND(r, &distance);
-        v[i]->setRoute(r);
-        v[i]->setCost(distance);
-        totalCost += v[i]->getCost();
-    }
 
     return totalCost;
 }
@@ -79,6 +49,25 @@ int buildInterSolution(std::vector<Vehicle*> v, LocalSearch *search)
         }
 
         totalCost += v[k]->getCost();
+    }
+
+    return totalCost;
+}
+
+int buildIntraSolution(std::vector<Vehicle*> v, LocalSearch *search)
+{
+    int totalCost = 0;
+    int distance;
+    std::vector<Client> r;
+    
+    for(int i = 0; i < v.size(); ++i)
+    {
+        r = v[i]->getRoute();
+        distance = v[i]->getCost();
+        search->intraVND(r, &distance);
+        v[i]->setRoute(r);
+        v[i]->setCost(distance);
+        totalCost += v[i]->getCost();
     }
 
     return totalCost;
